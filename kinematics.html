@@ -6,8 +6,16 @@
     <body>
         <h1>You can change the options at the right of the screen in order to experiment and see what happens!</h1>
         <div class= "choices">
-            <button name="ConstantForce">Constant Force?</button>
-            <button  name="Gravity">Gravity?</button>
+            <button id="ConstantForce">Constant Force?</button>
+            <button  id="Scale">Scale?</button>
+            <div class="slide">Mass
+            <div class = "slidecontainer">
+                <input type="range" min="1" max = "100" value="50" class="slider" id="massSlider">
+            </div>
+            </div>
         </div>
     </body>
+    <script src="kinematics.js">
+        
+    </script>
 </html>
