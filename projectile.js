@@ -1,7 +1,8 @@
+//I defined a lot of the variables that I use later.
 const canvas = document.getElementById("simCanvas");
 const ctx = canvas.getContext("2d");
 let x = 0;
-let y = 0;
+let y = 2; 
 let vx = 0;
 let vy = 0;
 let cameraX = 0;
@@ -9,11 +10,16 @@ let cameraY = 0;
 let targetCameraX = 0;
 let running = false;
 let hasScale = true;
+let currentStretch = 0;
+let currentAngle = 0;
 
+
+//These are the constants, just so that I don't have to rewrite the same thing a ton
 const Spacing = 50;
 const rulerX = 100;
 const Limit = canvas.width - 70;
 
+//This is checking for button presses and also setting values to all of the sliders.
 document.addEventListener("DOMContentLoaded", ()=>{
     let startBtn = document.getElementById("Start");
     let scaleBtn = document.getElementById("Scale");
@@ -29,32 +35,61 @@ document.addEventListener("DOMContentLoaded", ()=>{
             const mass = parseFloat(massSlider.value);
             const k = parseFloat(elasticSlider.value);
             const stretch = parseFloat(stretchedSlider.value);
-            const angle = parseFloat(angleSlider.value) * Math.PI / 180; // Convert to radians
+            const angle = parseFloat(angleSlider.value) * Math.PI / 180; 
             const v = Math.sqrt(k*stretch*stretch/mass);
-            vx = Math.cos(angle)*v;
-            vy = Math.sin(angle)*v;
+            vx = Math.sin(angle)*v;
+            vy = Math.cos(angle)*v;
             document.getElementById("massValue").textContent = mass.toFixed(2);
             document.getElementById("elasticValue").textContent = k.toFixed(2);
             document.getElementById("stretchedValue").textContent = stretch.toFixed(2);
-            document.getElementById("angleValue").textContent = (angle * 180 / Math.PI).toFixed(2); // Display in degrees
+            document.getElementById("angleValue").textContent = (angle * 180 / Math.PI).toFixed(2); 
 
         })
     }
-
     if(scaleBtn){
         scaleBtn.addEventListener("click", () =>{
             hasScale = !hasScale;
             scaleBtn.style.backgroundColor = hasScale ? "#1d5a1f": "#4adb4c";
         })
     }
+    stretchedSlider.addEventListener('input', updateFromSliders);
+    angleSlider.addEventListener('input', updateFromSliders);
+    updateFromSliders(); 
     requestAnimationFrame(loop);
-    
 });
 
+// Update ball position based on sliders
+function updateFromSliders() {
+    if (!running) {
+        const stretch = parseFloat(document.getElementById("stretchedSlider").value);
+        const angle = parseFloat(document.getElementById("angleSlider").value) * Math.PI / 180;
+        x = -(stretch*Math.sin(angle));
+        y = 2-(stretch*Math.cos(angle));
+        document.getElementById("stretchedValue").textContent = stretch.toFixed(2);
+        document.getElementById("angleValue").textContent = (angle * 180 / Math.PI).toFixed(2);
+    }
+}
+
+//This is the drawing function, Bassically makes the scene with javascript
 function draw(){
     ctx.clearRect(0,0,canvas.width,canvas.height);
     ctx.fillStyle = "#5e3d00";
     ctx.fillRect(0,500,canvas.width,canvas.height-500);
+    ctx.lineWidth = 8;
+    if (cameraX <= 0) {
+        ctx.strokeStyle = "black";
+        ctx.beginPath();
+        ctx.moveTo(rulerX,400);
+        ctx.lineTo(rulerX,500);
+        ctx.stroke();
+    }
+    if(!running && y > 1){
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(rulerX, 400);
+        ctx.lineTo(x * Spacing + rulerX - cameraX * Spacing, 500 - y * Spacing);
+        ctx.stroke();
+    }
     if(hasScale)
         drawScale();
     ctx.fillStyle = "blue";
@@ -64,6 +99,7 @@ function draw(){
     updateTable();
 }
 
+//This makes the scale on the ground if the button is pressed
 function drawScale(){
     ctx.strokeStyle = "black";
     ctx.lineWidth = 2;
@@ -88,6 +124,7 @@ function drawScale(){
     }
 }
 
+//This updates the table with the nwe values, most are already set through
 function updateTable(){
     const v = Math.sqrt(vx*vx+vy*vy);
     document.getElementById("positionXValue").textContent = x.toFixed(2);
@@ -95,6 +132,7 @@ function updateTable(){
     document.getElementById("velocityValue").textContent = v.toFixed(2);
 }
 
+//This basically 
 function updatePhysics(dt){
     const g = 9.81
     vy -= g*dt;
@@ -103,17 +141,19 @@ function updatePhysics(dt){
     let blockScreenX = rulerX+(x-cameraX)*Spacing;
     if(blockScreenX>Limit)
         cameraX = x- (Limit-rulerX)/Spacing;
-    if(blockScreenX<rulerX)
+    if(running && blockScreenX<rulerX)
         cameraX = x;
     if(y<=0){
         y = 0;
         vy = 0;
         vx = 0;
         running = false;
-        targetCameraX = x; // Set target to center the ball at rulerX
+        targetCameraX = x - (100 - rulerX) / Spacing;
     }
 }
 let lastTime = 0;
+
+//This is basically all the actions that it is going to take after every loop
 function loop(timestamp){
     if(!lastTime) lastTime = timestamp;
     const dt = (timestamp - lastTime)/1000;
@@ -122,7 +162,7 @@ function loop(timestamp){
         updatePhysics(dt);
     
     const cameraSpeed = 2; 
-    if(Math.abs(cameraX - targetCameraX) > 0.01) {
+    if(cameraX - targetCameraX > 0.01) {
         cameraX += (targetCameraX - cameraX) * cameraSpeed * dt;
     }
     
