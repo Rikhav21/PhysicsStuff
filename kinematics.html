@@ -4,7 +4,8 @@
         <link rel ="stylesheet" href ="styles.css"/>
     </head>
     <body>
-        <h1>You can change the options at the right of the screen in order to experiment and see what happens!</h1>
+        <h1>You can change the options at the right of the screen in order to experiment and see what happens!<br>Click on something to enable/disable it. Once you set everything press start simulation
+        </h1>
         <div class = "simulation">
             <div class= "choices">
                 <div id="dataTable" class="data-table">
@@ -12,7 +13,7 @@
                     <table>
                         <tr>
                             <td>Mass (kg):</td>
-                            <td id="massValue">50.00</td>
+                            <td id="massValue">10.00</td>
                         </tr>
                         <tr>
                             <td>Force (N):</td>
@@ -36,20 +37,30 @@
                         </tr>
                     </table>
                 </div>
-            <div class= "choices-controls">
+            <div class= "choiceBtns">
                 <button id="ConstantForce">Constant Force?</button>
                 <button  id="Scale">Scale?</button>
-                <div class="slide">Mass
+                <div class="slide">Mass(kg)
                     <div class = "slidecontainer">
-                        <input type="range" min="1" max = "100" value="50" class="slider" id="massSlider">
+                        <input type="range" min="1" max = "20" value="10" class="slider" id="massSlider">
+                    </div>
+                    <div class = "pointers">
+                        <div class = "left">1</div>
+                        <div class = "middle">10</div>
+                        <div class = "right">20</div>
                     </div>
                 </div>
-                <div class="slide">Force
+                <div class="slide">Force(N)
                     <div class = "slidecontainer">
-                        <input type="range" min="1" max = "100" value="50" class="slider" id="forceSlider">
+                        <input type="range" min="0" max = "100" value="50" class="slider" id="forceSlider">
+                    </div>
+                    <div class = pointers>
+                        <div class = "left">0</div>
+                        <div class = "middle">50</div>
+                        <div class = "right">100</div>
                     </div>
                 </div>
-                <button  id="Scale">Friction?</button>
+                <button  id="frict">Friction?</button>
                 <div class="slide">Coefficient of Friction
                     <div class = "slidecontainer">
                         <input type="range" min="1" max = "100" value="50" class="slider" id="frictionSlider">
@@ -61,7 +72,7 @@
                     </div>
                 </div>
                 <button id = "Start">Start Simulation</button>
-                <button id = "Reset">Reset?</button>
+                <a href = "index.html"><button>Go Back?</button></a>
                 </div>
             </div>
                 <canvas id="simCanvas" width="800" height="600"></canvas>

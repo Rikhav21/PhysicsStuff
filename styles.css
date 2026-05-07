@@ -37,7 +37,7 @@ body{
     overflow-y: auto;
     padding-top: 20px;
 }
-.choices-controls{
+.choiceBtns{
     display: flex;
     flex-direction: column;
     justify-content: center;

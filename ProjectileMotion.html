@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang = "en">
+    <head>
+        <link rel = "stylesheet" href = "styles.css"/>
+    </head>
+    <body>
+        <h1>You can alter of the options at the right, and then press the start simulation to start it<br> Click on a button to toggle if it enabled or disabled</h1>
+        <div class = "simulation">
+            <div class = "choices">
+                <div id = "dataTable" class = "data-table">
+                    <h3>Data</h3>
+                    <table>
+                        <tr>
+                            <td>Mass (KG)</td>
+                            <td id = "massValue">10.00</td>
+                        </tr>
+                        <tr>
+                            <td>k/Elastic constant (N/m)</td>
+                            <td id = "elasticValue">500.00</td>
+                        </tr>
+                        <tr>
+                            <td>Amount stretched (m)</td>
+                            <td id = "stretchedValue">0.5</td>
+                        </tr>
+                        <tr>
+                            <td>Angle (degrees)</td>
+                            <td id = "angleValue">45</td>
+                        </tr>
+                        <tr>
+                            <td>Position x (m)</td>
+                            <td id = "positionXValue">0.00</td>
+                        </tr>
+                        <tr>
+                            <td>Height (m)</td>
+                            <td id = "positionYValue">0.00</td>
+                        </tr>
+                        <tr>
+                            <td>Velocity (m/s)</td>
+                            <td id = "velocityValue">0.00</td>
+                        </tr>
+                    </table>
+                </div>
+                <div class = "choiceBtns">
+                    <button id="Scale">Scale?</button>
+                    <div class="slide">Mass (kg)
+                        <div class = "slidecontainer">
+                            <input type = "range" min = "1" max = "20" value = "10" class = "slider" id = "massSlider">
+                        </div>
+                        <div class = "pointers">
+                            <div class = "left">1</div>
+                            <div class = "middle">10</div>
+                            <div class = "right">20</div>
+                        </div>
+                    </div>
+                    <div class = "slide">Elastic Constant (N/m)
+                        <div class = "slidecontainer">
+                            <input type = "range" min = "100" max = "1000" value = "500" class = "slider" id = "elasticSlider">
+                        </div>
+                        <div class = "pointers">
+                            <div class = "left">100</div>
+                            <div class = "middle">500</div>
+                            <div class = "right">1000</div>
+                        </div>
+                    </div>
+                    <div class = "slide">Amount stretched(m)
+                        <div class = "slidecontainer">
+                            <input type = "range" min = "0" max = "1" value = "0.5" step = "0.01" class = "slider" id = "stretchedSlider">
+                        </div>
+                        <div class = "pointers">
+                            <div class = "left">0</div>
+                            <div class = "middle">0,5</div>
+                            <div class = "right">1</div>
+                        </div>
+                    </div>
+                    <div class = "slide">Angle(degrees)
+                        <div class = 'slidecontainer'>
+                            <input type = "range" min = "0" max = "90" value = "45" class = "slider" id = "angleSlider">
+                        </div>
+                        <div class = "pointers">
+                            <div class = "left">0</div>
+                            <div class = "middle">45</div>
+                            <div class = "right">90</div>
+                        </div>
+                    </div>
+                    <button id = "Start">Start Simulation</button>
+                    <a href = "index.html"><button>Go back?</button></a>
+                </div>
+            </div>
+            <canvas id = "simCanvas" width = "800" height="600"></canvas>
+        </div>
+    </body>
+    <script src = "projectile.js"></script>
+</html>
