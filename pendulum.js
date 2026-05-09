@@ -52,6 +52,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
     requestAnimationFrame(loop);
 });
 
+//This changes the variables and updates the table from the values of the sliders
 function updateFromSliders(){
     if(!running){
         const length = parseFloat(document.getElementById("lengthSlider").value);
@@ -67,6 +68,7 @@ function updateFromSliders(){
     }
 }
 
+//This redraws the scene based off of the physics and stuff
 function draw(){
     ctx.clearRect(0,0,canvas.width,canvas.height);
     ctx.strokeStyle = "white";
@@ -94,6 +96,7 @@ function draw(){
     updateTable();
 }
 
+//This updates the table based off of the new values
 function updateTable(){
     const length = parseFloat(document.getElementById("lengthSlider").value);
     const gravity = parseFloat(document.getElementById("gravitySlider").value);
@@ -103,6 +106,7 @@ function updateTable(){
     document.getElementById("periodValue").textContent = period.toFixed(2);
 }
 
+//This changes the physics stuff, like the velocity based off of the equation
 function updatePhysics(dt){
     const g = parseFloat(document.getElementById("gravitySlider").value);
     const length = parseFloat(document.getElementById("lengthSlider").value);
@@ -117,6 +121,8 @@ function updatePhysics(dt){
 }
 
 let lastTime=0;
+
+//This has the loop and the stuff that happens every single loop
 function loop(timestamp){
     if(!lastTime) lastTime = timestamp;
     const dt = (timestamp -lastTime)/1000;

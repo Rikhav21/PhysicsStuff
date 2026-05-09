@@ -13,6 +13,7 @@ let hasScale = true;
 let currentStretch = 0;
 let currentAngle = 0;
 let rad = 10;
+let scaleMovement = 0;
 
 //These are the constants, just so that I don't have to rewrite the same thing a ton
 const Spacing = 50;
@@ -92,6 +93,14 @@ function draw(){
     //This draws the ground
     ctx.fillStyle = "#5e3d00";
     ctx.fillRect(0,500,canvas.width,canvas.height-500);
+    //This draws the grass on the grround
+    ctx.lineWidth = 10;
+    ctx.strokeStyle = "#01380a";
+    ctx.beginPath();
+    ctx.moveTo(0,500);
+    ctx.lineTo(800,500);
+    ctx.stroke();
+
     ctx.lineWidth = 8;//This draws the slingshot as long as it is in frame
     if (cameraX <= 0) {
         ctx.strokeStyle = "black";
@@ -124,8 +133,6 @@ function draw(){
     ctx.beginPath();
     ctx.arc(x * Spacing + rulerX - cameraX * Spacing, 500 - y * Spacing, rad, 0, 2 * Math.PI);
     ctx.fill();
-    
-
 }
 
 //This makes the scale on the ground if the button is pressed
@@ -134,7 +141,7 @@ function drawScale(){
     ctx.lineWidth = 2;
     ctx.beginPath();
     if(cameraX > 0)
-        ctx.moveTo(0,520);
+        ctx.moveTo(rulerX-scaleMovement*Spacing,520);
     else
         ctx.moveTo(rulerX, 520);
     ctx.lineTo(canvas.width, 520);
@@ -153,8 +160,7 @@ function drawScale(){
     }
 }
 
-
-//This basically 
+//This basically updates the physics and all of the values as other things change
 function updatePhysics(dt){
     const g = 9.81
     vy -= g*dt;
@@ -186,6 +192,7 @@ function loop(timestamp){
     const cameraSpeed = 2; 
     if(Math.abs(cameraX - targetCameraX) > 0.01) {
         cameraX += (targetCameraX - cameraX) * cameraSpeed * dt;
+        scaleMovement+=(targetCameraX - cameraX) * cameraSpeed * dt;
     }
     
     draw();
