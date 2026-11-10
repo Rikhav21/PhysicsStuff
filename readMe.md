@@ -1,5 +1,5 @@
 # Physics Stuff Website
-This is a website that I made to simulate different physics experiments. You basically change different parameters and then watch the result play out.
+[This](https://rikhav21.github.io/PhysicsStuff/) is a website that I made to simulate different physics experiments. You basically change different parameters and then watch the result play out.
 
 ## Kinematics
 ![Image of the kinematics page](imgs/Kinematics.png)
